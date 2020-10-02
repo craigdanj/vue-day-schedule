@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # vue-scheduler
 
 ## Project setup
@@ -27,3 +28,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# vue-scheduler
+>>>>>>> 5cfe39157c2fcc4cac2bf20be2f8481a69588037
