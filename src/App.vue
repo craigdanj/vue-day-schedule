@@ -17,11 +17,11 @@ export default class App extends Vue {
   private eventList = [
     {
       name: "Test Event",
-      time: new Date()
+      date: new Date()
     },
     {
       name: "Test Event 2",
-      time: new Date()
+      date: new Date()
     },
   ]
 }

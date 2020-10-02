@@ -31,15 +31,14 @@
       </div>
 
       <div class="events">
-        <div class="event-row">
-          <div class="event">
-            Event name 1
-          </div>
-        </div>
-
-        <div class="event-row">
-          <div class="event">
-            Event name 2
+        <div class="event-row" v-for="(eventRow, i) in eventGrid" :key="i">
+          <div
+            class="event"
+            v-for="(event, index) in eventGrid[0]"
+            :key="index"
+            :style="{ left: event.position + 'px' }"
+          >
+            {{ event.name }}
           </div>
         </div>
       </div>
@@ -49,15 +48,41 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import moment from "moment";
 
 @Component
 export default class Scheduler extends Vue {
   @Prop() private events!: [];
 
-  private eventWidth = 150;
+  private eventWidth = 100;
+  private eventGrid = [[]];
 
   mounted() {
-    console.log('mounted. Events >>', this.events);
+    // console.log("mounted. Events >>", this.events);
+
+    //Create the events 2d array.
+    // Add the event onto the first row if there is no event in that slot.
+    //Else push onto the next row if there is no event in that slot on that row.
+    // If no next row exists then create one.
+
+    this.events.forEach(event => {
+      const date = moment(event.date);
+      const hour = date.hour();
+      const minute = date.minute();
+
+      //Check if event collides with another in that row.
+      //If yes check next row for collision.
+      //Else push onto first array.
+
+      this.eventGrid[0].push({
+        position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
+        name: event.name
+      });
+
+      console.log(date, hour, minute);
+    });
+
+    console.log(this.eventGrid);
   }
 }
 </script>
@@ -65,7 +90,7 @@ export default class Scheduler extends Vue {
 <style scoped>
 .scheduler-container {
   width: 100%;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   height: 250px;
   overflow-x: scroll;
   position: relative;
@@ -79,10 +104,10 @@ export default class Scheduler extends Vue {
 .scheduler-container .timeline .hour {
   width: 100px;
   height: 100%;
-  border-right: 1px solid #EEE;
+  border-right: 1px solid #eee;
   box-sizing: border-box;
   float: left;
-  color: #CCC;
+  color: #aaa;
   font-size: 12px;
   text-indent: 5px;
   padding-top: 5px;
@@ -105,13 +130,13 @@ export default class Scheduler extends Vue {
   width: 150px;
   height: 36px;
   background-color: white;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
   padding: 8px;
   font-size: 12px;
-  box-shadow: 2px 2px 5px #DDD;
+  box-shadow: 2px 2px 5px #ddd;
 
-  left: 150px; /* comment out later */
+  
 }
 </style>
