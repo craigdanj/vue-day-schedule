@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Scheduler msg="Welcome to Your Vue.js + TypeScript App" />
+    <Scheduler :events="eventList" />
   </div>
 </template>
 
@@ -14,7 +14,16 @@ import Scheduler from "./components/Scheduler.vue";
   }
 })
 export default class App extends Vue {
-  
+  private eventList = [
+    {
+      name: "Test Event",
+      time: new Date()
+    },
+    {
+      name: "Test Event 2",
+      time: new Date()
+    },
+  ]
 }
 </script>
 

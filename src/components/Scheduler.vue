@@ -52,12 +52,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class Scheduler extends Vue {
-  // @Prop() private msg!: string;
+  @Prop() private events!: [];
 
   private eventWidth = 150;
 
   mounted() {
-    // console.log('mounted');
+    console.log('mounted. Events >>', this.events);
   }
 }
 </script>
@@ -95,9 +95,13 @@ export default class Scheduler extends Vue {
 
 .scheduler-container .events .event-row {
   margin-bottom: 10px;
+  height: 36px;
+  position: relative;
 }
 
 .scheduler-container .events .event {
+  position: absolute;
+  top: 0px;
   width: 150px;
   height: 36px;
   background-color: white;
@@ -107,5 +111,7 @@ export default class Scheduler extends Vue {
   padding: 8px;
   font-size: 12px;
   box-shadow: 2px 2px 5px #DDD;
+
+  left: 150px; /* comment out later */
 }
 </style>
