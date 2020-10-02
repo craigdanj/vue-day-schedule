@@ -33,11 +33,16 @@
       <div class="events">
         <div class="event-row">
           <div class="event">
-            Event name
+            Event name 1
+          </div>
+        </div>
+
+        <div class="event-row">
+          <div class="event">
+            Event name 2
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -48,6 +53,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class Scheduler extends Vue {
   // @Prop() private msg!: string;
+
+  private eventWidth = 150;
 
   mounted() {
     // console.log('mounted');
@@ -84,6 +91,10 @@ export default class Scheduler extends Vue {
 .scheduler-container .events {
   position: absolute;
   top: 40px;
+}
+
+.scheduler-container .events .event-row {
+  margin-bottom: 10px;
 }
 
 .scheduler-container .events .event {
