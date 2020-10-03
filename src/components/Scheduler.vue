@@ -70,19 +70,65 @@ export default class Scheduler extends Vue {
       const hour = date.hour();
       const minute = date.minute();
 
-      //Check if event collides with another in that row.
-      //If yes check next row for collision.
-      //Else push onto first array.
+      // this.eventGrid.forEach((row, index) => {
+      //   row.forEach(ev => {
+      //     console.log(ev.position);
+      //   });
+      // });
 
-      this.eventGrid[0].push({
-        position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
-        name: event.name
-      });
+      //Start with first row.
+      //Iterate through add items to detect clashes.
+      //If no clash push to row.
+      //Else check if next row exists and look for clashes in it.
+      //Else add a row and push event onto it.
 
-      console.log(date, hour, minute);
+      for (let i = 0; i < this.eventGrid.length; i++) {
+        if (this.eventGrid[i].length) {
+          let clashDetected = false;
+
+          //Iterate through event row items to find clashes.
+          for (let j = 0; j < this.eventGrid[i].length; j++) {
+            console.log(this.eventGrid[i][j], event);
+
+            const eventDate = moment(moment(this.eventGrid[i][j].date));
+
+            if (
+              moment(date).isBetween(
+                moment(this.eventGrid[i][j].date),
+                eventDate.add(1, "hours")
+              )
+            ) {
+              //Add clash condition here
+              clashDetected = true;
+              console.log('CLASH OF THE TIME!!')
+            }
+          }
+
+          if (!clashDetected) {
+            this.eventGrid[i].push({
+              position:
+                hour * this.eventWidth + (minute * this.eventWidth) / 60,
+              name: event.name,
+              date
+            });
+          }
+        } else {
+          this.eventGrid[i].push({
+            position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
+            name: event.name,
+            date
+          });
+        }
+      }
+
+      //OLD CODE
+      // this.eventGrid[0].push({
+      //   position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
+      //   name: event.name
+      // });
     });
 
-    console.log(this.eventGrid);
+    console.log("GRID: ", this.eventGrid);
   }
 }
 </script>
