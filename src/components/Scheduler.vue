@@ -56,8 +56,8 @@ export default class Scheduler extends Vue {
   @Prop() private events!: [];
 
   private eventWidth = 100;
-  private eventGrid = [[]];
-  private now: number = null;
+  private eventGrid: any = [[]];
+  private now = 0;
 
   mounted() {
     // console.log('EVENTS: ', this.events);
@@ -66,7 +66,7 @@ export default class Scheduler extends Vue {
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
 
-    this.events.forEach((event, index) => {
+    this.events.forEach((event: any, index) => {
       const date = moment(event.date);
       const hour = date.hour();
       const minute = date.minute();

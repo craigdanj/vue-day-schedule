@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib:build": "vue-cli-service build --target lib --name VueScheduler ./src/components/Scheduler.vue"
   },
   "dependencies": {
     "core-js": "^3.6.5",

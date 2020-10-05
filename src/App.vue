@@ -26,12 +26,16 @@ export default class App extends Vue {
     },
     {
       name: "Test Event 3",
-      date: moment(new Date()).add(30, 'minutes')._d
+      date: moment(new Date())
+        .add(30, "minutes")
+        .toDate()
     },
     {
       name: "Test Event 4",
-      date: moment(new Date()).add(120, 'minutes')._d
-    },
+      date: moment(new Date())
+        .add(120, "minutes")
+        .toDate()
+    }
   ]
 }
 </script>
