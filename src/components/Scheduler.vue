@@ -57,6 +57,8 @@ export default class Scheduler extends Vue {
   private eventGrid: any = [[]];
   private now = 0;
 
+  //Publish to npm. Add the tag and everything required.
+  //Update Readme with installation instructions.
   //Add code to filter out events that do not belong to current Date.
   //Auto scroll to current time. To show the red line by default.
   //Show event details on hover of event.
