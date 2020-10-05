@@ -58,10 +58,15 @@ export default class Scheduler extends Vue {
   private eventGrid = [[]];
 
   mounted() {
-    this.events.forEach(event => {
+    this.events.forEach((event, index) => {
       const date = moment(event.date);
       const hour = date.hour();
       const minute = date.minute();
+      const newEvent = {
+        position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
+        name: event.name,
+        date
+      };
 
       //Start with first row.
       //Iterate through add items to detect clashes.
@@ -69,44 +74,87 @@ export default class Scheduler extends Vue {
       //Else check if next row exists and look for clashes in it.
       //Else add a row and push event onto it.
 
-      for (let i = 0; i < this.eventGrid.length; i++) {
-        if (this.eventGrid[i].length) {
-          let clashDetected = false;
+      if (index === 0) {
+        this.eventGrid[0].push(newEvent);
+      } else {
+        //Loop through eventGrid rows.
+        for (let i = 0; i < this.eventGrid.length; i++) {
+          //Loop through i'th row items to detect clash.
+          let clash = false;
 
-          //Iterate through event row items to find clashes.
           for (let j = 0; j < this.eventGrid[i].length; j++) {
-            console.log(this.eventGrid[i][j], event);
+            const eventDate = moment(this.eventGrid[i][j].date);
 
-            const eventDate = moment(moment(this.eventGrid[i][j].date));
+            const eventStart = moment(eventDate);
+            const eventEdge = eventDate.add(1, "hours");
+
+            console.log(">>", moment(date)._d);
+            console.log(eventStart._d);
+            console.log(eventEdge._d);
 
             if (
-              moment(date).isBetween(
-                moment(this.eventGrid[i][j].date),
-                eventDate.add(1, "hours")
-              )
+              moment(date).isBetween(eventStart, eventEdge) ||
+              moment(date).isSame(eventStart) ||
+              moment(date).isSame(eventEdge)
             ) {
-              //Add clash condition here
-              clashDetected = true;
-              console.log('CLASH OF THE TIME!!')
+              clash = true;
+              console.log("CLASH OF THE TIME!!");
+            } else {
+              console.log("NO CLASH OF THE TIME!!");
             }
           }
 
-          if (!clashDetected) {
-            this.eventGrid[i].push({
-              position:
-                hour * this.eventWidth + (minute * this.eventWidth) / 60,
-              name: event.name,
-              date
-            });
+          if (clash) {
+            if (this.eventGrid[i + 1]) {
+              continue;
+            } else {
+              this.eventGrid.push([]);
+              this.eventGrid[i + 1].push(newEvent);
+              break;
+            }
           }
-        } else {
-          this.eventGrid[i].push({
-            position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
-            name: event.name,
-            date
-          });
         }
       }
+
+      //V1 CODE
+      // for (let i = 0; i < this.eventGrid.length; i++) {
+      //   if (this.eventGrid[i].length) {
+      //     let clashDetected = false;
+
+      //     //Iterate through event row items to find clashes.
+      //     for (let j = 0; j < this.eventGrid[i].length; j++) {
+      //       console.log(this.eventGrid[i][j], event);
+
+      //       const eventDate = moment(moment(this.eventGrid[i][j].date));
+
+      //       if (
+      //         moment(date).isBetween(
+      //           moment(this.eventGrid[i][j].date),
+      //           eventDate.add(1, "hours")
+      //         )
+      //       ) {
+      //         //Add clash condition here
+      //         clashDetected = true;
+      //         console.log('CLASH OF THE TIME!!')
+      //       }
+      //     }
+
+      //     if (!clashDetected) {
+      //       this.eventGrid[i].push({
+      //         position:
+      //           hour * this.eventWidth + (minute * this.eventWidth) / 60,
+      //         name: event.name,
+      //         date
+      //       });
+      //     }
+      //   } else {
+      //     this.eventGrid[i].push({
+      //       position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
+      //       name: event.name,
+      //       date
+      //     });
+      //   }
+      // }
 
       //OLD CODE
       // this.eventGrid[0].push({
