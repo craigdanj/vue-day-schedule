@@ -42,6 +42,7 @@
           </div>
         </div>
       </div>
+      <div class="now" :style="{ left: now + 'px' }"></div>
     </div>
   </div>
 </template>
@@ -56,9 +57,14 @@ export default class Scheduler extends Vue {
 
   private eventWidth = 100;
   private eventGrid = [[]];
+  private now: number = null;
 
   mounted() {
     // console.log('EVENTS: ', this.events);
+
+    this.now =
+      moment().hour() * this.eventWidth +
+      (moment().minute() * this.eventWidth) / 60;
 
     this.events.forEach((event, index) => {
       const date = moment(event.date);
@@ -191,9 +197,19 @@ export default class Scheduler extends Vue {
   padding-top: 5px;
 }
 
+.scheduler-container .now {
+  border-left: 1px solid red;
+  opacity: 0.5;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  z-index: 0;
+}
+
 .scheduler-container .events {
   position: absolute;
   top: 40px;
+  z-index: 1;
 }
 
 .scheduler-container .events .event-row {
@@ -214,7 +230,5 @@ export default class Scheduler extends Vue {
   padding: 8px;
   font-size: 12px;
   box-shadow: 2px 2px 5px #ddd;
-
-  
 }
 </style>
