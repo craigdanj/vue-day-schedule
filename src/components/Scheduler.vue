@@ -59,6 +59,13 @@ export default class Scheduler extends Vue {
   private eventGrid: any = [[]];
   private now = 0;
 
+  //Add code to filter out events that do not belong to current Date.
+  //Auto scroll to current time. To show the red line by default.
+  //Show event details on hover of event.
+  //Allow customisable event template.
+  //Allow switching between dates. yesterday, day before, tomorrow etc.
+  //Maybe later show Date ranges.
+
   mounted() {
     // console.log('EVENTS: ', this.events);
 
@@ -118,52 +125,6 @@ export default class Scheduler extends Vue {
           }
         }
       }
-
-      //V1 CODE
-      // for (let i = 0; i < this.eventGrid.length; i++) {
-      //   if (this.eventGrid[i].length) {
-      //     let clashDetected = false;
-
-      //     //Iterate through event row items to find clashes.
-      //     for (let j = 0; j < this.eventGrid[i].length; j++) {
-      //       console.log(this.eventGrid[i][j], event);
-
-      //       const eventDate = moment(moment(this.eventGrid[i][j].date));
-
-      //       if (
-      //         moment(date).isBetween(
-      //           moment(this.eventGrid[i][j].date),
-      //           eventDate.add(1, "hours")
-      //         )
-      //       ) {
-      //         //Add clash condition here
-      //         clashDetected = true;
-      //         console.log('CLASH OF THE TIME!!')
-      //       }
-      //     }
-
-      //     if (!clashDetected) {
-      //       this.eventGrid[i].push({
-      //         position:
-      //           hour * this.eventWidth + (minute * this.eventWidth) / 60,
-      //         name: event.name,
-      //         date
-      //       });
-      //     }
-      //   } else {
-      //     this.eventGrid[i].push({
-      //       position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
-      //       name: event.name,
-      //       date
-      //     });
-      //   }
-      // }
-
-      //OLD CODE
-      // this.eventGrid[0].push({
-      //   position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
-      //   name: event.name
-      // });
     });
 
     console.log("GRID: ", this.eventGrid);
