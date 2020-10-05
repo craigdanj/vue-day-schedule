@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <h1>Scheduler</h1>
+
     <Scheduler :events="eventList" />
   </div>
 </template>

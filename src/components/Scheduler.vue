@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Scheduler</h1>
-
     <div class="scheduler-container">
       <div class="timeline">
         <div class="hour">12 am</div>
