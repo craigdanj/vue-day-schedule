@@ -58,23 +58,10 @@ export default class Scheduler extends Vue {
   private eventGrid = [[]];
 
   mounted() {
-    // console.log("mounted. Events >>", this.events);
-
-    //Create the events 2d array.
-    // Add the event onto the first row if there is no event in that slot.
-    //Else push onto the next row if there is no event in that slot on that row.
-    // If no next row exists then create one.
-
     this.events.forEach(event => {
       const date = moment(event.date);
       const hour = date.hour();
       const minute = date.minute();
-
-      // this.eventGrid.forEach((row, index) => {
-      //   row.forEach(ev => {
-      //     console.log(ev.position);
-      //   });
-      // });
 
       //Start with first row.
       //Iterate through add items to detect clashes.
