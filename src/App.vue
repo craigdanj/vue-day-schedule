@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <Scheduler msg="Welcome to Your Vue.js + TypeScript App" />
+    <h1>Scheduler</h1>
+
+    <Scheduler :events="eventList" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Scheduler from "./components/Scheduler.vue";
+import moment from "moment";
 
 @Component({
   components: {
@@ -14,7 +17,28 @@ import Scheduler from "./components/Scheduler.vue";
   }
 })
 export default class App extends Vue {
-  
+  private eventList = [
+    {
+      name: "Test Event",
+      date: new Date()
+    },
+    {
+      name: "Test Event 2",
+      date: new Date()
+    },
+    {
+      name: "Test Event 3",
+      date: moment(new Date())
+        .add(30, "minutes")
+        .toDate()
+    },
+    {
+      name: "Test Event 4",
+      date: moment(new Date())
+        .add(120, "minutes")
+        .toDate()
+    }
+  ]
 }
 </script>
 
@@ -24,5 +48,8 @@ export default class App extends Vue {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  padding: 0 15px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 </style>
