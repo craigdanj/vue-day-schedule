@@ -7,6 +7,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Scheduler from "./components/Scheduler.vue";
+import moment from "moment";
 
 @Component({
   components: {
@@ -22,6 +23,14 @@ export default class App extends Vue {
     {
       name: "Test Event 2",
       date: new Date()
+    },
+    {
+      name: "Test Event 3",
+      date: moment(new Date()).add(30, 'minutes')._d
+    },
+    {
+      name: "Test Event 4",
+      date: moment(new Date()).add(120, 'minutes')._d
     },
   ]
 }

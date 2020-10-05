@@ -34,7 +34,7 @@
         <div class="event-row" v-for="(eventRow, i) in eventGrid" :key="i">
           <div
             class="event"
-            v-for="(event, index) in eventGrid[0]"
+            v-for="(event, index) in eventRow"
             :key="index"
             :style="{ left: event.position + 'px' }"
           >
@@ -58,6 +58,8 @@ export default class Scheduler extends Vue {
   private eventGrid = [[]];
 
   mounted() {
+    // console.log('EVENTS: ', this.events);
+
     this.events.forEach((event, index) => {
       const date = moment(event.date);
       const hour = date.hour();
@@ -68,11 +70,7 @@ export default class Scheduler extends Vue {
         date
       };
 
-      //Start with first row.
-      //Iterate through add items to detect clashes.
-      //If no clash push to row.
-      //Else check if next row exists and look for clashes in it.
-      //Else add a row and push event onto it.
+      console.log(`EVENT ${index + 1}`, event, newEvent)
 
       if (index === 0) {
         this.eventGrid[0].push(newEvent);
@@ -87,10 +85,6 @@ export default class Scheduler extends Vue {
 
             const eventStart = moment(eventDate);
             const eventEdge = eventDate.add(1, "hours");
-
-            console.log(">>", moment(date)._d);
-            console.log(eventStart._d);
-            console.log(eventEdge._d);
 
             if (
               moment(date).isBetween(eventStart, eventEdge) ||
@@ -112,6 +106,9 @@ export default class Scheduler extends Vue {
               this.eventGrid[i + 1].push(newEvent);
               break;
             }
+          } else {
+            this.eventGrid[i].push(newEvent);
+            break;
           }
         }
       }
