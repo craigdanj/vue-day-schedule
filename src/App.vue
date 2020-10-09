@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Scheduler</h1>
 
-    <Scheduler :events="eventList" />
+    <Scheduler :events="eventList"></Scheduler>
   </div>
 </template>
 

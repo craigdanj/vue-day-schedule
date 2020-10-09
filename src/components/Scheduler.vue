@@ -62,7 +62,7 @@ export default class Scheduler extends Vue {
   //Add code to filter out events that do not belong to current Date.
   //Auto scroll to current time. To show the red line by default.
   //Show event details on hover of event.
-  //Allow customisable event template.
+  //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
   //Allow switching between dates. yesterday, day before, tomorrow etc.
   //Maybe later show Date ranges.
 
@@ -73,7 +73,8 @@ export default class Scheduler extends Vue {
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
 
-    this.now = this.now+1900;
+    //Comment out later
+    // this.now = this.now+1500;
 
     this.events.forEach((event: any, index) => {
       const date = moment(event.date);
@@ -132,7 +133,7 @@ export default class Scheduler extends Vue {
     console.log("GRID: ", this.eventGrid);
 
     //Scroll now marker into the view.
-    this.$nextTick(() => this.$refs.now.scrollIntoView());
+    this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 }
 </script>
