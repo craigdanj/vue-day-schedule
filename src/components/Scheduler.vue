@@ -1,9 +1,9 @@
 <template>
   <div class="vue-scheduler">
-    <h3 class="date">
-      <span>&lt;</span>
-      {{getSelectedDate()}}
-      <span>&gt;</span>
+    <h3 class="header">
+      <span class="date">{{ getSelectedDate() }}</span>
+      <span class="nav">&lt;</span>
+      <span class="nav">&gt;</span>
     </h3>
     <div class="scheduler-container">
       <div class="timeline">
@@ -162,8 +162,30 @@ export default class Scheduler extends Vue {
 </script>
 
 <style scoped>
-.date {
+.header {
   margin: 0 0 8px;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.header .date {
+  margin-right: 16px;
+  color: #555;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.header .nav {
+  font-size: 16px;
+  display: inline-block;
+  padding: 0 5px;
+  border-radius: 1px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #efefef;
+  color: #555;
+  margin-right: 5px;
+  border-radius: 5px;
 }
 
 .scheduler-container {

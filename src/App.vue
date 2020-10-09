@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Scheduler</h1>
+    <h1>Vue Scheduler</h1>
 
     <Scheduler :events="eventList"></Scheduler>
   </div>
