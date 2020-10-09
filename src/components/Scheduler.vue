@@ -2,9 +2,10 @@
   <div class="vue-scheduler">
     <h3 class="header">
       <span class="date">{{ getSelectedDate() }}</span>
-      <span class="nav">&lt;</span>
-      <span class="nav">&gt;</span>
+      <span class="nav" @click="onSelectPrevDay">&lt;</span>
+      <span class="nav" @click="onSelectNextDay">&gt;</span>
     </h3>
+
     <div class="scheduler-container">
       <div class="timeline">
         <div class="hour">12 am</div>
@@ -158,7 +159,21 @@ export default class Scheduler extends Vue {
   }
 
   public getEventTooltip(event: { name: string; date: {} }) {
-    return `${event.name} - ${moment(moment(event.date)).format("H:mm A,  MMM DD YYYY")}`;
+    return `${event.name} - ${moment(moment(event.date)).format(
+      "H:mm A, MMM DD YYYY"
+    )}`;
+  }
+
+  public onSelectPrevDay() {
+    this.selectedDate = moment(moment(this.selectedDate))
+      .subtract(1, "days")
+      .toDate();
+  }
+
+  public onSelectNextDay() {
+    this.selectedDate = moment(moment(this.selectedDate))
+      .add(1, "days")
+      .toDate();
   }
 }
 </script>
