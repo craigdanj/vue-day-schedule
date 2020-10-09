@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>{{getSelectedDate()}}</h3>
     <div class="scheduler-container">
       <div class="timeline">
         <div class="hour">12 am</div>
@@ -57,6 +58,7 @@ export default class Scheduler extends Vue {
   private eventWidth = 100;
   private eventGrid: any = [[]];
   private now = 0;
+  private selectedDate = new Date();
 
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
@@ -74,9 +76,11 @@ export default class Scheduler extends Vue {
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
 
-    //Filter out events that arent on selected date.
+    //Filter out events that aren't on the selected date.
     const eventsToday = this.events.filter(event => {
-      return event.date ? this.isToday(event.date): false;
+      return event.date
+        ? this.matchedSelectedDate(event.date, this.selectedDate)
+        : false;
     });
 
     eventsToday.forEach((event: any, index) => {
@@ -135,17 +139,20 @@ export default class Scheduler extends Vue {
 
     console.log("GRID: ", this.eventGrid);
 
-    //Scroll now marker into the view.
+    //Scroll the "now" marker into view.
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
-  public isToday(date:any) {
-    const today = new Date();
+  public matchedSelectedDate(date:any, selectedDate) {
     return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
+      date.getDate() === selectedDate.getDate() &&
+      date.getMonth() === selectedDate.getMonth() &&
+      date.getFullYear() === selectedDate.getFullYear()
     );
+  }
+
+  public getSelectedDate() {
+    return moment(moment(this.selectedDate)).format('MMM DD, YYYY');
   }
 }
 </script>
