@@ -38,6 +38,12 @@ export default class App extends Vue {
         .add(120, "minutes")
         .toDate()
     },
+    { //This event breaks the grid
+      name: "Test Event 5",
+      date: moment(new Date())
+        .subtract(40, "minutes")
+        .toDate()
+    },
     {
       name: "Test Event Wrong",
       date: moment(new Date())

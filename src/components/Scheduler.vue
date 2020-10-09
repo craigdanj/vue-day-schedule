@@ -35,6 +35,7 @@
             v-for="(event, index) in eventRow"
             :key="index"
             :style="{ left: event.position + 'px' }"
+            :title="event.name"
           >
             {{ event.name }}
           </div>
