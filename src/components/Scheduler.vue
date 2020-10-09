@@ -163,9 +163,8 @@ export default class Scheduler extends Vue {
 
 <style scoped>
 .header {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: #555;
-  text-transform: uppercase;
 }
 
 .header .date {
