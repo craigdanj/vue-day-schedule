@@ -64,13 +64,11 @@ export default class Scheduler extends Vue {
   private now = 0;
   private selectedDate = new Date();
 
-  //Show event details on hover of event. Show date and time.
+  //Fix algorithm issue with event 5.
+  //Add logic for next and previous dates.
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
-  //Add code to filter out events that do not belong to current Date.
-  //Auto scroll to current time. To show the red line by default.
   //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
-  //Allow switching between dates. yesterday, day before, tomorrow etc.
   //Maybe later show Date ranges.
 
   mounted() {
