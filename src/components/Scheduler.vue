@@ -65,7 +65,7 @@ export default class Scheduler extends Vue {
   private now = 0;
   private selectedDate = new Date();
 
-  //Fix algorithm issue with event 5.
+  //Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.)
   //Add logic for next and previous dates.
   //Add rerender logic to rerender lifecycle method.
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
