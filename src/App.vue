@@ -37,6 +37,12 @@ export default class App extends Vue {
       date: moment(new Date())
         .add(120, "minutes")
         .toDate()
+    },
+    {
+      name: "Test Event Wrong",
+      date: moment(new Date())
+        .subtract(220, "minutes")
+        .toDate()
     }
   ]
 }

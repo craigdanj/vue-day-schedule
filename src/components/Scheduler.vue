@@ -73,10 +73,12 @@ export default class Scheduler extends Vue {
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
 
-    //Comment out later
-    // this.now = this.now+1500;
+    //Filter out events that arent on selected date.
+    const eventsToday = this.events.filter(event => {
+      return event.date ? this.isToday(event.date): false;
+    });
 
-    this.events.forEach((event: any, index) => {
+    eventsToday.forEach((event: any, index) => {
       const date = moment(event.date);
       const hour = date.hour();
       const minute = date.minute();
@@ -134,6 +136,15 @@ export default class Scheduler extends Vue {
 
     //Scroll now marker into the view.
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
+  }
+
+  public isToday(date:any) {
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
   }
 }
 </script>
