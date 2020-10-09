@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="now" :style="{ left: now + 'px' }"></div>
+      <div class="now" :style="{ left: now + 'px' }" ref="now"></div>
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default class Scheduler extends Vue {
   private eventGrid: any = [[]];
   private now = 0;
 
-  //Publish to npm. Add the tag and everything required.
+  //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
   //Add code to filter out events that do not belong to current Date.
   //Auto scroll to current time. To show the red line by default.
@@ -73,6 +73,8 @@ export default class Scheduler extends Vue {
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
 
+    this.now = this.now+1900;
+
     this.events.forEach((event: any, index) => {
       const date = moment(event.date);
       const hour = date.hour();
@@ -83,7 +85,7 @@ export default class Scheduler extends Vue {
         date
       };
 
-      console.log(`EVENT ${index + 1}`, event, newEvent)
+      console.log(`EVENT ${index + 1}`, event, newEvent);
 
       if (index === 0) {
         this.eventGrid[0].push(newEvent);
@@ -128,6 +130,9 @@ export default class Scheduler extends Vue {
     });
 
     console.log("GRID: ", this.eventGrid);
+
+    //Scroll now marker into the view.
+    this.$nextTick(() => this.$refs.now.scrollIntoView());
   }
 }
 </script>
