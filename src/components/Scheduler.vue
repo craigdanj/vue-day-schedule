@@ -67,6 +67,7 @@ export default class Scheduler extends Vue {
 
   //Fix algorithm issue with event 5.
   //Add logic for next and previous dates.
+  //Add rerender logic to rerender lifecycle method.
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
   //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
