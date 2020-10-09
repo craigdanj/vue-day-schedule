@@ -40,7 +40,7 @@
             v-for="(event, index) in eventRow"
             :key="index"
             :style="{ left: event.position + 'px' }"
-            :title="event.name"
+            :title="getEventTooltip(event)"
           >
             {{ event.name }}
           </div>
@@ -64,11 +64,11 @@ export default class Scheduler extends Vue {
   private now = 0;
   private selectedDate = new Date();
 
+  //Show event details on hover of event. Show date and time.
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
   //Add code to filter out events that do not belong to current Date.
   //Auto scroll to current time. To show the red line by default.
-  //Show event details on hover of event.
   //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
   //Allow switching between dates. yesterday, day before, tomorrow etc.
   //Maybe later show Date ranges.
@@ -156,7 +156,11 @@ export default class Scheduler extends Vue {
   }
 
   public getSelectedDate() {
-    return moment(moment(this.selectedDate)).format('MMM DD, YYYY');
+    return moment(moment(this.selectedDate)).format("MMM DD, YYYY");
+  }
+
+  public getEventTooltip(event: { name: string; date: {} }) {
+    return `${event.name} - ${moment(moment(event.date)).format("H:mm A,  MMM DD YYYY")}`;
   }
 }
 </script>

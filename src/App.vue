@@ -2,6 +2,14 @@
   <div id="app">
     <h1>Vue Scheduler</h1>
 
+    <p>
+      The Vue Scheduler allows you to display events in a day along a horizontal
+      timeline. Given below is a demo of it.
+    </p>
+
+    <br />
+    <br />
+
     <Scheduler :events="eventList"></Scheduler>
   </div>
 </template>
