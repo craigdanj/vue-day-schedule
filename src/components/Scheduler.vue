@@ -65,7 +65,7 @@ export default class Scheduler extends Vue {
   private now = 0;
   private selectedDate = new Date();
 
-  //Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.)
+  //Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.) - https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap (check momentjs answer)
   //Add logic for next and previous dates.
   //Add rerender logic to rerender lifecycle method.
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
@@ -89,6 +89,8 @@ export default class Scheduler extends Vue {
 
     eventsToday.forEach((event: any, index) => {
       const date = moment(event.date);
+      const dateEdge = moment(date).add(1, "hours");
+      console.log(event.name," /// ", date._d," /// ", dateEdge._d);
       const hour = date.hour();
       const minute = date.minute();
       const newEvent = {
@@ -97,7 +99,7 @@ export default class Scheduler extends Vue {
         date
       };
 
-      console.log(`EVENT ${index + 1}`, event, newEvent);
+      // console.log(`EVENT ${index + 1}`, event, newEvent);
 
       if (index === 0) {
         this.eventGrid[0].push(newEvent);
@@ -114,14 +116,15 @@ export default class Scheduler extends Vue {
             const eventEdge = eventDate.add(1, "hours");
 
             if (
-              moment(date).isBetween(eventStart, eventEdge) ||
-              moment(date).isSame(eventStart) ||
-              moment(date).isSame(eventEdge)
+              this.doDatesOverlap(date, dateEdge, eventStart, eventEdge)
+              // moment(date).isBetween(eventStart, eventEdge) ||
+              // moment(date).isSame(eventStart) ||
+              // moment(date).isSame(eventEdge)
             ) {
               clash = true;
-              console.log("CLASH OF THE TIME!!");
+              console.log("CLASH OF THE TIME!!", event.name);
             } else {
-              console.log("NO CLASH OF THE TIME!!");
+              console.log("NO CLASH OF THE TIME!!", event.name);
             }
           }
 
@@ -141,10 +144,22 @@ export default class Scheduler extends Vue {
       }
     });
 
-    console.log("GRID: ", this.eventGrid);
+    // console.log("GRID: ", this.eventGrid);
 
     //Scroll the "now" marker into view.
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
+  }
+
+  public doDatesOverlap(startDate1, endDate1, startDate2, endDate2) {
+    // console.log(startDate1._d)
+    // console.log(endDate1._d)
+    // console.log(startDate2._d)
+    // console.log(endDate2._d);
+    console.log('O_o')
+    return (
+      moment(startDate1).isSameOrBefore(endDate2) &&
+      moment(startDate2).isSameOrBefore(endDate1)
+    );
   }
 
   public matchedSelectedDate(date:any, selectedDate) {
@@ -254,7 +269,8 @@ export default class Scheduler extends Vue {
 .scheduler-container .events .event {
   position: absolute;
   top: 0px;
-  width: 150px;
+  /* Keep this width equal to the eventWidth variable */
+  width: 100px;
   height: 36px;
   background-color: white;
   border: 1px solid #ccc;
