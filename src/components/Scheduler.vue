@@ -65,10 +65,9 @@ export default class Scheduler extends Vue {
   @Prop() private events!: [];
 
   private eventWidth = 100;
-  private eventGrid: any = [[]];
+  private eventGrid = [[]];
   private nowMarkerPosition = 0;
   private selectedDate = new Date();
-
 
   //Publish first version to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
