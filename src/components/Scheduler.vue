@@ -184,12 +184,15 @@ export default class Scheduler extends Vue {
     this.selectedDate = moment(moment(this.selectedDate))
       .subtract(1, "days")
       .toDate();
+
+    this.$emit("vs-date-change", this.selectedDate);
   }
 
   public onSelectNextDay() {
     this.selectedDate = moment(moment(this.selectedDate))
       .add(1, "days")
       .toDate();
+    this.$emit("vs-date-change", this.selectedDate);
   }
 }
 </script>

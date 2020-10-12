@@ -4,13 +4,13 @@
 
     <p>
       The Vue Scheduler allows you to display events in a day along a horizontal
-      timeline. Given below is a demo of it.
+      timeline. Given below is a demonstration.
     </p>
 
     <br />
     <br />
 
-    <Scheduler :events="eventList"></Scheduler>
+    <Scheduler :events="eventList" v-on:vs-date-change="handleDateChange" />
   </div>
 </template>
 
@@ -59,7 +59,11 @@ export default class App extends Vue {
         .subtract(220, "minutes")
         .toDate()
     }
-  ]
+  ];
+
+  public handleDateChange(date: Date) {
+    console.log('>>>>>))): ', date);
+  }
 }
 </script>
 
