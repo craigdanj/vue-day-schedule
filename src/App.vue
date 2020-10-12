@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <h1>Scheduler</h1>
+    <h1>Vue Scheduler</h1>
 
-    <Scheduler :events="eventList" />
+    <p>
+      The Vue Scheduler allows you to display events in a day along a horizontal
+      timeline. Given below is a demonstration.
+    </p>
+
+    <br />
+    <br />
+
+    <Scheduler :events="eventList" v-on:vs-date-change="handleDateChange" />
   </div>
 </template>
 
@@ -37,8 +45,39 @@ export default class App extends Vue {
       date: moment(new Date())
         .add(120, "minutes")
         .toDate()
+    },
+    {
+      name: "Test Event 5",
+      date: moment(new Date())
+        .subtract(30, "minutes")
+        .toDate()
+    },
+    {
+      name: "Test Event Wrong",
+      date: moment(new Date())
+        .subtract(220, "minutes")
+        .toDate()
     }
-  ]
+  ];
+
+  public handleDateChange(date: Date) {
+    if (new Date().getSeconds() % 2 === 0) this.eventList = [];
+    else
+      this.eventList = [
+        {
+          name: "Test Event On Date Change 1",
+          date: moment(date)
+            .add(120, "minutes")
+            .toDate()
+        },
+        {
+          name: "Test Event On Date Change 2",
+          date: moment(date)
+            .subtract(30, "minutes")
+            .toDate()
+        }
+      ];
+  }
 }
 </script>
 

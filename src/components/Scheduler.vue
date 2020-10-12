@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div class="vue-scheduler">
+    <h3 class="header">
+      <span class="date">{{ getSelectedDate() }}</span>
+      <span class="nav" @click="onSelectPrevDay">&lt;</span>
+      <span class="nav" @click="onSelectNextDay">&gt;</span>
+    </h3>
+
     <div class="scheduler-container">
       <div class="timeline">
         <div class="hour">12 am</div>
@@ -32,21 +38,26 @@
         <div class="event-row" v-for="(eventRow, i) in eventGrid" :key="i">
           <div
             class="event"
-            v-for="(event, index) in eventRow"
-            :key="index"
+            v-for="(event) in eventRow"
+            :key="event.date.toString()"
             :style="{ left: event.position + 'px' }"
+            :title="getEventTooltip(event)"
           >
             {{ event.name }}
           </div>
         </div>
       </div>
-      <div class="now" :style="{ left: now + 'px' }"></div>
+      <div
+        class="now"
+        :style="{ left: nowMarkerPosition + 'px' }"
+        ref="now"
+      ></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import moment from "moment";
 
 @Component
@@ -54,25 +65,48 @@ export default class Scheduler extends Vue {
   @Prop() private events!: [];
 
   private eventWidth = 100;
-  private eventGrid: any = [[]];
-  private now = 0;
+  private eventGrid = [[]];
+  private nowMarkerPosition = 0;
+  private selectedDate = new Date();
 
-  //Add code to filter out events that do not belong to current Date.
-  //Auto scroll to current time. To show the red line by default.
-  //Show event details on hover of event.
-  //Allow customisable event template.
-  //Allow switching between dates. yesterday, day before, tomorrow etc.
+  //Publish first version to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
+  //Update Readme with installation instructions.
+  //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
   //Maybe later show Date ranges.
+  //Truncate long event names to prevent themspilling out of the event containers.
+  //Make length of event without end date configurable.
+  //(Done? Test) Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.) - https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap (check momentjs answer)
+
+  @Watch("events")
+  onEventsChanged() {
+    this.arrangeEvents();
+  }
 
   mounted() {
-    // console.log('EVENTS: ', this.events);
-
-    this.now =
+    this.nowMarkerPosition =
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
 
-    this.events.forEach((event: any, index) => {
+    this.arrangeEvents();
+
+    //Scroll the "now" marker into view.
+    this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
+  }
+
+  public arrangeEvents() {
+    console.log(this.events, this.selectedDate);
+    this.eventGrid = [[]];
+
+    //Filter out events that aren't on the selected date.
+    const eventsToday = this.events.filter(event => {
+      return event.date
+        ? this.matchedSelectedDate(event.date, this.selectedDate)
+        : false;
+    });
+
+    eventsToday.forEach((event: any, index) => {
       const date = moment(event.date);
+      const dateEdge = moment(date).add(1, "hours");
       const hour = date.hour();
       const minute = date.minute();
       const newEvent = {
@@ -80,8 +114,6 @@ export default class Scheduler extends Vue {
         name: event.name,
         date
       };
-
-      console.log(`EVENT ${index + 1}`, event, newEvent)
 
       if (index === 0) {
         this.eventGrid[0].push(newEvent);
@@ -97,15 +129,11 @@ export default class Scheduler extends Vue {
             const eventStart = moment(eventDate);
             const eventEdge = eventDate.add(1, "hours");
 
-            if (
-              moment(date).isBetween(eventStart, eventEdge) ||
-              moment(date).isSame(eventStart) ||
-              moment(date).isSame(eventEdge)
-            ) {
+            if (this.doDatesOverlap(date, dateEdge, eventStart, eventEdge)) {
               clash = true;
-              console.log("CLASH OF THE TIME!!");
+              console.log("CLASH OF THE TIME!!", event.name);
             } else {
-              console.log("NO CLASH OF THE TIME!!");
+              console.log("NO CLASH OF THE TIME!!", event.name);
             }
           }
 
@@ -124,13 +152,76 @@ export default class Scheduler extends Vue {
         }
       }
     });
+  }
 
-    console.log("GRID: ", this.eventGrid);
+  public doDatesOverlap(startDate1, endDate1, startDate2, endDate2) {
+    return (
+      moment(startDate1).isSameOrBefore(endDate2) &&
+      moment(startDate2).isSameOrBefore(endDate1)
+    );
+  }
+
+  public matchedSelectedDate(date:any, selectedDate) {
+    return (
+      date.getDate() === selectedDate.getDate() &&
+      date.getMonth() === selectedDate.getMonth() &&
+      date.getFullYear() === selectedDate.getFullYear()
+    );
+  }
+
+  public getSelectedDate() {
+    return moment(moment(this.selectedDate)).format("MMM DD, YYYY");
+  }
+
+  public getEventTooltip(event: { name: string; date: {} }) {
+    return `${event.name} - ${moment(moment(event.date)).format(
+      "H:mm A, MMM DD YYYY"
+    )}`;
+  }
+
+  public onSelectPrevDay() {
+    this.selectedDate = moment(moment(this.selectedDate))
+      .subtract(1, "days")
+      .toDate();
+
+    this.$emit("vs-date-change", this.selectedDate);
+  }
+
+  public onSelectNextDay() {
+    this.selectedDate = moment(moment(this.selectedDate))
+      .add(1, "days")
+      .toDate();
+    this.$emit("vs-date-change", this.selectedDate);
   }
 }
 </script>
 
 <style scoped>
+.header {
+  margin: 0 0 10px;
+  color: #555;
+}
+
+.header .date {
+  margin-right: 16px;
+  color: #555;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.header .nav {
+  font-size: 16px;
+  display: inline-block;
+  padding: 0 5px;
+  border-radius: 1px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #efefef;
+  color: #555;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
 .scheduler-container {
   width: 100%;
   border: 1px solid #ccc;
@@ -180,7 +271,8 @@ export default class Scheduler extends Vue {
 .scheduler-container .events .event {
   position: absolute;
   top: 0px;
-  width: 150px;
+  /* Keep this width equal to the eventWidth variable */
+  width: 100px;
   height: 36px;
   background-color: white;
   border: 1px solid #ccc;
