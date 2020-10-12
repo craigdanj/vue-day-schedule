@@ -47,10 +47,9 @@ export default class App extends Vue {
         .toDate()
     },
     {
-      //This event breaks the grid. Find out why
       name: "Test Event 5",
       date: moment(new Date())
-        .subtract(40, "minutes")
+        .subtract(30, "minutes")
         .toDate()
     },
     {
@@ -62,7 +61,7 @@ export default class App extends Vue {
   ];
 
   public handleDateChange(date: Date) {
-    console.log('>>>>>))): ', date);
+    console.log('>>>>>: ', date);
   }
 }
 </script>

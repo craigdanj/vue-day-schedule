@@ -65,9 +65,8 @@ export default class Scheduler extends Vue {
   private now = 0;
   private selectedDate = new Date();
 
-  //Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.) - https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap (check momentjs answer)
-  //Add logic for next and previous dates.
   //Add rerender logic to rerender lifecycle method.
+  //(Done? Test) Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.) - https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap (check momentjs answer)
   //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
   //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
@@ -90,7 +89,6 @@ export default class Scheduler extends Vue {
     eventsToday.forEach((event: any, index) => {
       const date = moment(event.date);
       const dateEdge = moment(date).add(1, "hours");
-      console.log(event.name," /// ", date._d," /// ", dateEdge._d);
       const hour = date.hour();
       const minute = date.minute();
       const newEvent = {
@@ -115,12 +113,7 @@ export default class Scheduler extends Vue {
             const eventStart = moment(eventDate);
             const eventEdge = eventDate.add(1, "hours");
 
-            if (
-              this.doDatesOverlap(date, dateEdge, eventStart, eventEdge)
-              // moment(date).isBetween(eventStart, eventEdge) ||
-              // moment(date).isSame(eventStart) ||
-              // moment(date).isSame(eventEdge)
-            ) {
+            if (this.doDatesOverlap(date, dateEdge, eventStart, eventEdge)) {
               clash = true;
               console.log("CLASH OF THE TIME!!", event.name);
             } else {
@@ -151,11 +144,6 @@ export default class Scheduler extends Vue {
   }
 
   public doDatesOverlap(startDate1, endDate1, startDate2, endDate2) {
-    // console.log(startDate1._d)
-    // console.log(endDate1._d)
-    // console.log(startDate2._d)
-    // console.log(endDate2._d);
-    console.log('O_o')
     return (
       moment(startDate1).isSameOrBefore(endDate2) &&
       moment(startDate2).isSameOrBefore(endDate1)
