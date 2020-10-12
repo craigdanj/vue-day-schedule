@@ -38,8 +38,8 @@
         <div class="event-row" v-for="(eventRow, i) in eventGrid" :key="i">
           <div
             class="event"
-            v-for="(event, index) in eventRow"
-            :key="index"
+            v-for="(event) in eventRow"
+            :key="event.date.toString()"
             :style="{ left: event.position + 'px' }"
             :title="getEventTooltip(event)"
           >
@@ -47,13 +47,17 @@
           </div>
         </div>
       </div>
-      <div class="now" :style="{ left: now + 'px' }" ref="now"></div>
+      <div
+        class="now"
+        :style="{ left: nowMarkerPosition + 'px' }"
+        ref="now"
+      ></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import moment from "moment";
 
 @Component
@@ -62,22 +66,35 @@ export default class Scheduler extends Vue {
 
   private eventWidth = 100;
   private eventGrid: any = [[]];
-  private now = 0;
+  private nowMarkerPosition = 0;
   private selectedDate = new Date();
 
-  //Add rerender logic to rerender lifecycle method.
+  //Add rerender logic to rerender lifecycle method. On date change the event list is not rerendering. Find out why.
   //(Done? Test) Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.) - https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap (check momentjs answer)
-  //Publish to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
+  //Publish first version to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
   //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
   //Maybe later show Date ranges.
 
-  mounted() {
-    // console.log('EVENTS: ', this.events);
+  @Watch("events")
+  onEventsChanged() {
+    this.arrangeEvents();
+  }
 
-    this.now =
+  mounted() {
+    this.nowMarkerPosition =
       moment().hour() * this.eventWidth +
       (moment().minute() * this.eventWidth) / 60;
+
+    this.arrangeEvents();
+
+    //Scroll the "now" marker into view.
+    this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
+  }
+
+  public arrangeEvents() {
+    console.log(this.events, this.selectedDate);
+    this.eventGrid = [[]];
 
     //Filter out events that aren't on the selected date.
     const eventsToday = this.events.filter(event => {
@@ -96,8 +113,6 @@ export default class Scheduler extends Vue {
         name: event.name,
         date
       };
-
-      // console.log(`EVENT ${index + 1}`, event, newEvent);
 
       if (index === 0) {
         this.eventGrid[0].push(newEvent);
@@ -136,11 +151,6 @@ export default class Scheduler extends Vue {
         }
       }
     });
-
-    // console.log("GRID: ", this.eventGrid);
-
-    //Scroll the "now" marker into view.
-    this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
   public doDatesOverlap(startDate1, endDate1, startDate2, endDate2) {
