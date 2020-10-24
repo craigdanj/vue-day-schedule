@@ -61,22 +61,22 @@ export default class App extends Vue {
   ];
 
   public handleDateChange(date: Date) {
-    if (new Date().getSeconds() % 2 === 0) this.eventList = [];
-    else
-      this.eventList = [
-        {
-          name: "Test Event On Date Change 1",
-          date: moment(date)
-            .add(120, "minutes")
-            .toDate()
-        },
-        {
-          name: "Test Event On Date Change 2",
-          date: moment(date)
-            .subtract(30, "minutes")
-            .toDate()
-        }
-      ];
+    // if (new Date().getSeconds() % 2 === 0) this.eventList = [];
+    // else
+    this.eventList = [
+      {
+        name: "Test Event On Date Change 1",
+        date: moment(date)
+          .add(120, "minutes")
+          .toDate()
+      },
+      {
+        name: "Test Event On Date Change 2",
+        date: moment(date)
+          .subtract(30, "minutes")
+          .toDate()
+      }
+    ];
   }
 }
 </script>
