@@ -90,11 +90,11 @@ export default class Scheduler extends Vue {
     this.arrangeEvents();
 
     //Scroll the "now" marker into view.
+    //@ts-ignore
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
   public arrangeEvents() {
-    console.log(this.events, this.selectedDate);
     this.eventGrid = [[]];
 
     //Filter out events that aren't on the selected date.
