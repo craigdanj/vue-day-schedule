@@ -27,7 +27,7 @@ import moment from "moment";
 export default class App extends Vue {
   private eventList = [
     {
-      name: "Test Event",
+      name: "Test Event 1",
       date: new Date()
     },
     {
@@ -53,7 +53,7 @@ export default class App extends Vue {
         .toDate()
     },
     {
-      name: "Test Event Wrong",
+      name: "Test Event - Really Long Name",
       date: moment(new Date())
         .subtract(220, "minutes")
         .toDate()
@@ -61,22 +61,21 @@ export default class App extends Vue {
   ];
 
   public handleDateChange(date: Date) {
-    if (new Date().getSeconds() % 2 === 0) this.eventList = [];
-    else
-      this.eventList = [
-        {
-          name: "Test Event On Date Change 1",
-          date: moment(date)
-            .add(120, "minutes")
-            .toDate()
-        },
-        {
-          name: "Test Event On Date Change 2",
-          date: moment(date)
-            .subtract(30, "minutes")
-            .toDate()
-        }
-      ];
+    //Code to fetch next batch of data based on date can be written here.
+    // this.eventList = [
+    //   {
+    //     name: "Test Event On Date Change 1",
+    //     date: moment(date)
+    //       .add(120, "minutes")
+    //       .toDate()
+    //   },
+    //   {
+    //     name: "Test Event On Date Change 2",
+    //     date: moment(date)
+    //       .subtract(30, "minutes")
+    //       .toDate()
+    //   }
+    // ];
   }
 }
 </script>

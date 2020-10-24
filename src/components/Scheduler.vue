@@ -38,7 +38,7 @@
         <div class="event-row" v-for="(eventRow, i) in eventGrid" :key="i">
           <div
             class="event"
-            v-for="(event) in eventRow"
+            v-for="event in eventRow"
             :key="event.date.toString()"
             :style="{ left: event.position + 'px' }"
             :title="getEventTooltip(event)"
@@ -65,7 +65,7 @@ export default class Scheduler extends Vue {
   @Prop() private events!: [];
 
   private eventWidth = 100;
-  private eventGrid = [[]];
+  private eventGrid: any = [[]];
   private nowMarkerPosition = 0;
   private selectedDate = new Date();
 
@@ -90,26 +90,24 @@ export default class Scheduler extends Vue {
     this.arrangeEvents();
 
     //Scroll the "now" marker into view.
+    //@ts-ignore
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
   public arrangeEvents() {
-    console.log(this.events, this.selectedDate);
     this.eventGrid = [[]];
 
     //Filter out events that aren't on the selected date.
-    const eventsToday = this.events.filter(event => {
-      return event.date
-        ? this.matchedSelectedDate(event.date, this.selectedDate)
-        : false;
+    const eventsToday = this.events.filter(({ date }) => {
+      return date ? this.matchedSelectedDate(date, this.selectedDate) : false;
     });
 
-    eventsToday.forEach((event: any, index) => {
+    eventsToday.forEach((event: { date: Date; name: string }, index) => {
       const date = moment(event.date);
       const dateEdge = moment(date).add(1, "hours");
       const hour = date.hour();
       const minute = date.minute();
-      const newEvent = {
+      const newEvent: { position: number; name: string; date: {} } = {
         position: hour * this.eventWidth + (minute * this.eventWidth) / 60,
         name: event.name,
         date
@@ -154,14 +152,19 @@ export default class Scheduler extends Vue {
     });
   }
 
-  public doDatesOverlap(startDate1, endDate1, startDate2, endDate2) {
+  public doDatesOverlap(
+    startDate1: any,
+    endDate1: any,
+    startDate2: any,
+    endDate2: any
+  ) {
     return (
       moment(startDate1).isSameOrBefore(endDate2) &&
       moment(startDate2).isSameOrBefore(endDate1)
     );
   }
 
-  public matchedSelectedDate(date:any, selectedDate) {
+  public matchedSelectedDate(date: Date, selectedDate: Date) {
     return (
       date.getDate() === selectedDate.getDate() &&
       date.getMonth() === selectedDate.getMonth() &&
@@ -281,5 +284,9 @@ export default class Scheduler extends Vue {
   padding: 8px;
   font-size: 12px;
   box-shadow: 2px 2px 5px #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 </style>
