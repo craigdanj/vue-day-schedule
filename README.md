@@ -1,5 +1,5 @@
 # vue-scheduler
-A daily scheduler/planner plugin to plot events on a horizontal timeline.
+A scheduler/planner used to plot the events of a day on a horizontal timeline.
 
 
 ## Project setup
