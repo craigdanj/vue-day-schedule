@@ -284,5 +284,9 @@ export default class Scheduler extends Vue {
   padding: 8px;
   font-size: 12px;
   box-shadow: 2px 2px 5px #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 </style>
