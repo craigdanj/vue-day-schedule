@@ -2,6 +2,11 @@
 View your day's schedule along a horizontal timeline. Built for VueJS.
 
 
+## Install via npm
+```
+npm install vue-day-schedule
+```
+
 
 
 ## Setup for development incase you want to contribute
