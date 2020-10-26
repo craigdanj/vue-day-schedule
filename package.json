@@ -1,6 +1,6 @@
 {
   "name": "vue-day-schedule",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "View your day's schedule along a horizontal timeline. Built for VueJS.",
   "scripts": {
     "serve": "vue-cli-service serve --no-verify",
