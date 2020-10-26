@@ -8,7 +8,10 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "lib:build": "vue-cli-service build --target lib --name VueDaySchedule ./src/components/VueDaySchedule.vue",
-    "lib:publish": "npm run lib:build && npm publish"
+    "lib:publish": "npm run lib:build && npm publish",
+    "inc-version-patch": "npm version patch",
+    "inc-version-minor": "npm version minor",
+    "inc-version-major": "npm version major"
   },
   "dependencies": {
     "core-js": "^3.6.5",
