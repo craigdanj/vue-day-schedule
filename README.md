@@ -3,20 +3,20 @@ View your day's schedule along a horizontal timeline. Built for VueJS. (Document
 
 
 ## Install via npm
-```
+```bash
 npm install vue-day-schedule
 ```
 
 ## Setup 
 First include the CSS file in your main.js (or main.ts if you use Typescript). You could also add this to the file you wish to use the scheduler in.
 
-```
+```js
 import 'vue-day-schedule/dist/VueDayScheduler.css';
 ```
 
 Then import the component and use it way you would normally use a component.
 
-```
+```js
 import vueDaySchedule from 'vue-day-schedule';
 
 <template>
@@ -49,11 +49,11 @@ export default {
 
 
 ## Development setup to contribute
-```
+```bash
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
+```bash
 npm run serve
 ```
