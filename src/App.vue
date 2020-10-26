@@ -10,18 +10,21 @@
     <br />
     <br />
 
-    <Scheduler :events="eventList" v-on:vs-date-change="handleDateChange" />
+    <vue-day-schedule
+      :events="eventList"
+      v-on:vs-date-change="handleDateChange"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Scheduler from "./components/Scheduler.vue";
+import VueDaySchedule from "./components/VueDaySchedule.vue";
 import moment from "moment";
 
 @Component({
   components: {
-    Scheduler
+    VueDaySchedule
   }
 })
 export default class App extends Vue {

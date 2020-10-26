@@ -1,13 +1,13 @@
 {
   "name": "vue-day-schedule",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "View your day's schedule along a horizontal timeline. Built for VueJS.",
   "scripts": {
     "serve": "vue-cli-service serve --no-verify",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "lib:build": "vue-cli-service build --target lib --name VueScheduler ./src/components/Scheduler.vue",
+    "lib:build": "vue-cli-service build --target lib --name VueDaySchedule ./src/components/VueDaySchedule.vue",
     "lib:publish": "npm run lib:build && npm publish"
   },
   "dependencies": {
@@ -42,13 +42,14 @@
   "license": "MIT",
   "keywords": [
     "vuejs",
-    "scheduler"
+    "scheduler",
+    "day"
   ],
-  "main": "dist/VueScheduler.common.js",
+  "main": "dist/VueDaySchedule.common.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/craigdanj/vue-scheduler.git"
+    "url": "git+https://github.com/craigdanj/vue-day-schedule.git"
   },
-  "homepage": "https://github.com/craigdanj/vue-scheduler",
+  "homepage": "https://github.com/craigdanj/vue-day-schedule",
   "private": false
 }
