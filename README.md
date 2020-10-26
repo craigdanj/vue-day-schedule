@@ -7,9 +7,48 @@ View your day's schedule along a horizontal timeline. Built for VueJS. (Document
 npm install vue-day-schedule
 ```
 
+## Setup 
+First include the CSS file in your main.js (or main.ts if you use Typescript). You could also add this to the file you wish to use the scheduler in.
+
+```
+import 'vue-day-schedule/dist/VueDayScheduler.css';
+```
+
+Then import the component and use it way you would normally use a component.
+
+```
+import vueDaySchedule from 'vue-day-schedule';
+
+<template>
+    <vue-day-schedule 
+        :events="eventList"
+        v-on:vs-date-change="handleDateChange"
+    />
+</template>
+
+<script>
+import vueDaySchedule from 'vue-day-schedule';
+
+export default {
+    components: {
+        vueDaySchedule
+    },
+    data () {
+        eventList: []
+    },
+    methods () {
+        handleDateChange: function (date) {
+            alert("Date changed");
+        }
+    }
+}
+</script>
+
+```
 
 
-## Setup for development incase you want to contribute
+
+## Development setup to contribute
 ```
 npm install
 ```
