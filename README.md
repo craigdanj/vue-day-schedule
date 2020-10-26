@@ -34,7 +34,12 @@ export default {
         vueDaySchedule
     },
     data () {
-        eventList: []
+        eventList: [
+            {
+                name: "Test Event", //Name of the event
+                date: new Date()    //Start time of the event as a JS Date object
+            }
+        ]
     },
     methods () {
         handleDateChange: function (date) {
