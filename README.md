@@ -51,7 +51,7 @@ export default {
 
 ```
 
-
+Please feel free to raise issues or feature requests. If feature requests align with the goal of this project we will probably work on adding it in.
 
 ## Development setup to contribute
 ```bash
@@ -62,5 +62,3 @@ npm install
 ```bash
 npm run serve
 ```
-
-Please feel free to raise issues or feature requests. If feature requests align with the goal of this project we will probably work on adding it in.
