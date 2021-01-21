@@ -85,6 +85,7 @@ export default class Scheduler extends Vue {
   //BUGS!!!!!!!!
   //Remove marker and fix scroll position when changing dates.
   //Add color bar.
+  //Fix build issue with ts-lint issues.
 
   mounted() {
     this.setMarkerPostion();
