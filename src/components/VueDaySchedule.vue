@@ -82,15 +82,27 @@ export default class Scheduler extends Vue {
     this.arrangeEvents();
   }
 
+  //BUGS!!!!!!!!
+  //Remove marker and fix scroll position when changing dates.
+  //Add color bar.
+
   mounted() {
-    this.nowMarkerPosition =
-      moment().hour() * this.eventWidth +
-      (moment().minute() * this.eventWidth) / 60;
-
+    this.setMarkerPostion();
     this.arrangeEvents();
+  }
 
-    //Scroll the "now" marker into view.
-    //@ts-ignore
+  public setMarkerPostion() {
+    const selected = moment(this.selectedDate).format("DD MM YYYY");
+    const today = moment().format("DD MM YYYY");
+
+    if (selected === today) {
+      this.nowMarkerPosition =
+        moment().hour() * this.eventWidth +
+        (moment().minute() * this.eventWidth) / 60;
+    } else {
+      this.nowMarkerPosition = -10;
+    }
+
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
@@ -188,6 +200,8 @@ export default class Scheduler extends Vue {
       .toDate();
 
     this.$emit("vs-date-change", this.selectedDate);
+
+    this.setMarkerPostion();
   }
 
   public onSelectNextDay() {
@@ -195,6 +209,8 @@ export default class Scheduler extends Vue {
       .add(1, "days")
       .toDate();
     this.$emit("vs-date-change", this.selectedDate);
+
+    this.setMarkerPostion();
   }
 }
 </script>

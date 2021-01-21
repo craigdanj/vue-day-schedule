@@ -65,20 +65,20 @@ export default class App extends Vue {
 
   public handleDateChange(date: Date) {
     //Code to fetch next batch of data based on date can be written here.
-    // this.eventList = [
-    //   {
-    //     name: "Test Event On Date Change 1",
-    //     date: moment(date)
-    //       .add(120, "minutes")
-    //       .toDate()
-    //   },
-    //   {
-    //     name: "Test Event On Date Change 2",
-    //     date: moment(date)
-    //       .subtract(30, "minutes")
-    //       .toDate()
-    //   }
-    // ];
+    this.eventList = [
+      {
+        name: "Test Event On Date Change 1",
+        date: moment(date)
+          .add(120, "minutes")
+          .toDate()
+      },
+      {
+        name: "Test Event On Date Change 2",
+        date: moment(date)
+          .subtract(30, "minutes")
+          .toDate()
+      }
+    ];
   }
 }
 </script>
