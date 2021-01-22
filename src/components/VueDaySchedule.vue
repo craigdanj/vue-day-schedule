@@ -84,10 +84,12 @@ export default class Scheduler extends Vue {
   }
 
   // TODO:
-  //CSS is not loading. Severe bug!
+  // Add custom tooltip for each event. "tooltip" property.
+
   //Add color bar.
   //Handler for event click.
   //Custom template for event.
+  //Bug: Switching dates scrolls the page up just a little?
 
   mounted() {
     this.setMarkerPostion();
