@@ -1,6 +1,8 @@
 # Vue Day Schedule
 View your day's schedule along a horizontal timeline. Built for VueJS. (Documentation is still work in progress.)
 
+[Demo](https://vue-day-schedule-hqhhp8qca.vercel.app/)
+
 
 ## Install via npm
 ```bash
