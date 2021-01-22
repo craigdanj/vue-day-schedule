@@ -86,7 +86,6 @@ export default class Scheduler extends Vue {
   // TODO:
   //Add color bar.
   //Handler for event click.
-  //Fix build issue with ts-lint issues. ts-ignore doenst allow "npm run serve" but lack of it prevents lib:build.
   //Custom template for event.
 
   mounted() {
