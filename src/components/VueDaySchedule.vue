@@ -82,8 +82,9 @@ export default class Scheduler extends Vue {
     this.arrangeEvents();
   }
 
-  //BUGS!!!!!!!!
+  // TODO:
   //Add color bar.
+  //Handler for event click.
   //Fix build issue with ts-lint issues.
 
   mounted() {
