@@ -86,6 +86,7 @@ export default class Scheduler extends Vue {
   //Add color bar.
   //Handler for event click.
   //Fix build issue with ts-lint issues.
+  //Custom template for event.
 
   mounted() {
     this.setMarkerPostion();
