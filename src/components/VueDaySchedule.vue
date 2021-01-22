@@ -104,7 +104,7 @@ export default class Scheduler extends Vue {
     } else {
       this.nowMarkerPosition = -10;
     }
-
+    //@ts-ignore
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
