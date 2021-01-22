@@ -68,6 +68,7 @@ export default class Scheduler extends Vue {
   private eventGrid: any = [[]];
   private nowMarkerPosition = 0;
   private selectedDate = new Date();
+  public $refs;
 
   //Publish first version to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
   //Update Readme with installation instructions.
@@ -85,7 +86,7 @@ export default class Scheduler extends Vue {
   // TODO:
   //Add color bar.
   //Handler for event click.
-  //Fix build issue with ts-lint issues.
+  //Fix build issue with ts-lint issues. ts-ignore doenst allow "npm run serve" but lack of it prevents lib:build.
   //Custom template for event.
 
   mounted() {
@@ -104,7 +105,6 @@ export default class Scheduler extends Vue {
     } else {
       this.nowMarkerPosition = -10;
     }
-    //@ts-ignore
     this.$nextTick(() => this.$refs.now.scrollIntoView({ inline: "center" }));
   }
 
