@@ -48,7 +48,12 @@
     "scheduler",
     "day"
   ],
-  "main": "dist/VueDaySchedule.common.js",
+  "main": "dist/VueDaySchedule.umd.js",
+  "module": "dist/VueDaySchedule.esm.js",
+  "unpkg": "dist/VueDaySchedule.min.js",
+  "browser": {
+    "./sfc": "src/components/VueDaySchedule.vue"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/craigdanj/vue-day-schedule.git"

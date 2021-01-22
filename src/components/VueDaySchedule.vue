@@ -84,6 +84,7 @@ export default class Scheduler extends Vue {
   }
 
   // TODO:
+  //CSS is not loading. Severe bug!
   //Add color bar.
   //Handler for event click.
   //Custom template for event.
