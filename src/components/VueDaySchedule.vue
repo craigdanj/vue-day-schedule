@@ -65,7 +65,7 @@ export default class Scheduler extends Vue {
   @Prop() private events!: [];
 
   private eventWidth = 100;
-  private eventGrid: any = [[]];
+  private eventGrid = [[]];
   private nowMarkerPosition = 0;
   private selectedDate = new Date();
   public $refs;
@@ -145,9 +145,6 @@ export default class Scheduler extends Vue {
 
             if (this.doDatesOverlap(date, dateEdge, eventStart, eventEdge)) {
               clash = true;
-              console.log("CLASH OF THE TIME!!", event.name);
-            } else {
-              console.log("NO CLASH OF THE TIME!!", event.name);
             }
           }
 
@@ -308,5 +305,4 @@ export default class Scheduler extends Vue {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 </style>
