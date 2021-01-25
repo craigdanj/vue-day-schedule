@@ -166,10 +166,10 @@ export default class Scheduler extends Vue {
   }
 
   public doDatesOverlap(
-    startDate1: any,
-    endDate1: any,
-    startDate2: any,
-    endDate2: any
+    startDate1: {},
+    endDate1: {},
+    startDate2: {},
+    endDate2: {}
   ) {
     return (
       moment(startDate1).isSameOrBefore(endDate2) &&
