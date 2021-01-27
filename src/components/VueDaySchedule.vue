@@ -70,14 +70,6 @@ export default class Scheduler extends Vue {
   private selectedDate = new Date();
   public $refs;
 
-  //Publish first version to npm. Add the tag and everything required. https://zellwk.com/blog/publish-to-npm/
-  //Update Readme with installation instructions.
-  //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
-  //Maybe later show Date ranges.
-  //Truncate long event names to prevent themspilling out of the event containers.
-  //Make length of event without end date configurable.
-  //(Done? Test) Fix algorithm issue with event 5. (Clash condition needs to change. Needs to check if whole range clashes not just start time.) - https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap (check momentjs answer)
-
   @Watch("events")
   onEventsChanged() {
     this.arrangeEvents();
@@ -88,8 +80,13 @@ export default class Scheduler extends Vue {
 
   //Add color bar.
   //Handler for event click.
-  //Custom template for event.
+
   //Bug: Switching dates scrolls the page up just a little?
+  //Maybe later show Date ranges instead of fixed width events.
+  //Truncate long event names to prevent themspilling out of the event containers.
+  //Make length of event without end date configurable.
+  //Add publish instructions to npm. https://zellwk.com/blog/publish-to-npm/
+  //Allow customisable event template. Use scoped slots - https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots
 
   mounted() {
     this.setMarkerPostion();
